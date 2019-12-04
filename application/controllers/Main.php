@@ -31,6 +31,26 @@ class Main extends CI_Controller {
       redirect('Main','refresh');
   }
 
+  public function edituser () {
+    $id = $this->uri->segment(3);
+    $data = array (
+      'user' => $this->Usersmodel->getUser($id),
+    );
+
+    $this->load->view('edituser', $data);
+
+  }
+
+  public function editUserProcess ($id) {
+    $statusProses = $this->Usersmodel->editProcess($id);
+    if ($statusProses) {
+      $this->session->set_flashdata('notif', 'Successfully Edited');
+      redirect('Main','refresh');
+    } else {
+       $this->session->set_flashdata('notif', 'Error Edited');
+      redirect('Main','refresh');
+    }
+  }
 
 
 }

@@ -18,7 +18,16 @@ class Usersmodel extends CI_Model {
 		return true;
 	}
 
+	function getUser ($id) {
+		return $this->mongo_db->where(array('_id' => new mongoId($id)))->get('users');
+	}
 
-	
-
+	function editProcess($id) {
+		$data = array(
+				'username' 	=> $this->input->post('username'), 
+				'phone' 	=> $this->input->post('phone'),
+				'unik'		=> $this->input->post('unik') 
+			);		
+		return $this->mongo_db->where(array('_id'=>new mongoId($id)))->set($data)->update('users');
+	} 
 }
